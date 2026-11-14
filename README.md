@@ -1,6 +1,8 @@
-# V380 / V380 Pro Wi-Fi camera: local RTSP stream for Frigate (AWT3610E, AliOS Things)
+# Frigate bridge for V380 / V380 Pro Wi-Fi cameras (AWT3610E, AliOS Things)
 
-Notes and launcher scripts for getting a local **RTSP video and audio stream** out of cheap V380 / V380 Pro Wi-Fi IP cameras that have **no RTSP, no ONVIF and no shell**, so that [Frigate](https://frigate.video), Home Assistant, VLC, ffmpeg or any RTSP client can use them without the cloud app.
+A bridge that turns cheap V380 / V380 Pro Wi-Fi IP cameras, which have **no RTSP, no ONVIF and no shell**, into local **RTSP video and audio streams** that [Frigate](https://frigate.video) (and Home Assistant, VLC, ffmpeg or any RTSP client) can use without the cloud app. The bridge is a third-party decoder run once per camera; this repo holds the notes, test results and launcher script.
+
+**Status of the Frigate part: the camera-to-RTSP half is tested; Frigate pulling the streams is not.** Details below.
 
 **Search terms:** V380, V380 Pro, V380 RTSP, V380 Frigate, AWT3610E, `Hw_AWT3610E_XHR_E_V1.0_WF`, AliOS Things camera, cheap Chinese Wi-Fi camera, white-label OEM IP camera, no ONVIF, no RTSP, port 8800, port 9800, local stream without cloud, PTZ dome Wi-Fi camera.
 
@@ -65,7 +67,35 @@ Always put a time limit on ffmpeg here: an unlimited run against a silent stream
 
 ## Frigate (planned, not tested)
 
-Each camera would be one RTSP input, for example `rtsp://<decoder-host>:8554/live` and `rtsp://<decoder-host>:8555/live`, with one stream per camera used for both detection and recording. The decoder has to run all the time and restart on its own; that is not set up.
+Each camera becomes one RTSP input: `rtsp://<decoder-host>:8554/live` for the first and `rtsp://<decoder-host>:8555/live` for the second, one stream per camera used for both detection and recording. The decoder has to run all the time and restart on its own; that is not set up.
+
+A starting point for the Frigate config. **Not tested, and the option names change between Frigate versions, so check it against your version's documentation:**
+
+```yaml
+cameras:
+  camera1:
+    ffmpeg:
+      inputs:
+        - path: rtsp://<decoder-host>:8554/live
+          input_args: preset-rtsp-generic
+          roles: [detect, record]
+    detect:
+      width: 1280
+      height: 720
+      fps: 5
+  camera2:
+    ffmpeg:
+      inputs:
+        - path: rtsp://<decoder-host>:8555/live
+          input_args: preset-rtsp-generic
+          roles: [detect, record]
+    detect:
+      width: 1280
+      height: 720
+      fps: 5
+```
+
+The audio is A-law (G.711); recording it may need an audio output option or re-encoding to AAC. Motion detection is done by Frigate from the video, so the camera does not need to send motion events. If you get Frigate working with this, please open an issue or pull request with your working config.
 
 ## Licence
 
