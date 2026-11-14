@@ -24,7 +24,7 @@ A record of one way to get a local **RTSP video and audio stream** out of cheap 
 
 ## What worked (tested)
 
-The [AspirantDrago/V380Decoder](https://github.com/AspirantDrago/V380Decoder) fork of V380Decoder (a .NET tool that speaks the V380 protocol, decodes the stream and serves it as RTSP and as a JPEG snapshot) gave a working stream from both cameras:
+The [AspirantDrago/V380Decoder](https://github.com/AspirantDrago/V380Decoder) fork of [PyanSofyan/V380Decoder](https://github.com/PyanSofyan/V380Decoder) (a .NET tool that speaks the V380 protocol, decodes the stream and serves it as RTSP and as a JPEG snapshot) gave a working stream from both cameras:
 
 | Test | Result |
 |---|---|
@@ -100,6 +100,24 @@ cameras:
 ```
 
 The audio is A-law (G.711); recording it may need an audio output option or re-encoding to AAC. Motion detection is done by Frigate from the video, so the camera does not need to send motion events. If you get Frigate working with this, a pull request or issue with your working config would help others, with no obligation.
+
+## Acknowledgements
+
+This repo only records tests. The real work was done by others, and all of it is theirs:
+
+**Used (run on the cameras)**
+- [PyanSofyan/V380Decoder](https://github.com/PyanSofyan/V380Decoder): the original .NET decoder that speaks the V380 protocol on the camera's port 8800 and serves RTSP and snapshots. It logged in to the cameras but received no stream here.
+- [AspirantDrago/V380Decoder](https://github.com/AspirantDrago/V380Decoder): the fork that gave the working streams in these tests.
+
+**Read for information (nothing was run, no code copied)**
+- [felipemarques/camera-v380decoder](https://github.com/felipemarques/camera-v380decoder): another fork, whose notes list tested firmware and warn that reliability depends on the exact firmware.
+- [bcaller/v380-ipcam-firmware-patch](https://github.com/bcaller/v380-ipcam-firmware-patch), including [issue 5](https://github.com/bcaller/v380-ipcam-firmware-patch/issues/5): reports from other owners of the same firmware family, whose boot log showed it is AliOS Things and not Linux. Thanks to the owners who posted theirs.
+- [Arkady23/V380-Web](https://github.com/Arkady23/V380-Web): SD-card web server tricks for other V380 firmware, which helped rule that route out here.
+- [vladko312/Research_v380_IP_camera](https://github.com/vladko312/Research_v380_IP_camera): research on a different V380 model.
+
+**Tools** used for the checks: [ffmpeg](https://ffmpeg.org) and [Frigate](https://frigate.video) (Frigate itself was not run).
+
+None of these projects is affiliated with or endorses this repo, and no code from them is included here. Check each one's own licence before reusing it.
 
 ## Licence
 
