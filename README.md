@@ -1,8 +1,12 @@
-# Frigate bridge for V380 / V380 Pro Wi-Fi cameras (AWT3610E, AliOS Things)
+# Frigate bridge for V380 / V380 Pro Wi-Fi cameras (AWT3610E, AliOS Things) [WIP]
 
-A bridge that turns cheap V380 / V380 Pro Wi-Fi IP cameras, which have **no RTSP, no ONVIF and no shell**, into local **RTSP video and audio streams** that [Frigate](https://frigate.video) (and Home Assistant, VLC, ffmpeg or any RTSP client) can use without the cloud app. The bridge is a third-party decoder run once per camera; this repo holds the notes, test results and launcher script.
+> **Work in progress.** Incomplete and changing. Expect gaps, untested parts and wrong guesses.
 
-**Status of the Frigate part: the camera-to-RTSP half is tested; Frigate pulling the streams is not.** Details below.
+A record of one way to get a local **RTSP video and audio stream** out of cheap V380 / V380 Pro Wi-Fi IP cameras, which have **no RTSP, no ONVIF and no shell**, so that [Frigate](https://frigate.video) (or Home Assistant, VLC, ffmpeg or any RTSP client) could use them without the cloud app. It worked in tests on two cameras. The "bridge" is a third-party decoder run once per camera; this repo holds the notes, test results and an example launcher script.
+
+**No promises.** This is what one person tried, shared as is. There is no support, no guarantee that it works on your camera, firmware or network, and no timeline for updates or for the Frigate test. Issues and pull requests are welcome, but they may not get a reply or a fix.
+
+**Status of the Frigate part: the camera-to-RTSP half was tested; Frigate pulling the streams was not.** Details below.
 
 **Search terms:** V380, V380 Pro, V380 RTSP, V380 Frigate, AWT3610E, `Hw_AWT3610E_XHR_E_V1.0_WF`, AliOS Things camera, cheap Chinese Wi-Fi camera, white-label OEM IP camera, no ONVIF, no RTSP, port 8800, port 9800, local stream without cloud, PTZ dome Wi-Fi camera.
 
@@ -65,9 +69,9 @@ Always put a time limit on ffmpeg here: an unlimited run against a silent stream
 - The decoder depends on a version of `SixLabors.ImageSharp` that NuGet flags with known vulnerabilities. The risk is low while it decodes only your own cameras' frames on your LAN, but think before exposing it.
 - Never commit passwords, device IDs, stream keys or Wi-Fi details.
 
-## Frigate (planned, not tested)
+## Frigate (not tested)
 
-Each camera becomes one RTSP input: `rtsp://<decoder-host>:8554/live` for the first and `rtsp://<decoder-host>:8555/live` for the second, one stream per camera used for both detection and recording. The decoder has to run all the time and restart on its own; that is not set up.
+Each camera could be used as one RTSP input: `rtsp://<decoder-host>:8554/live` for the first and `rtsp://<decoder-host>:8555/live` for the second, one stream per camera used for both detection and recording. The decoder has to run all the time and restart on its own; that is not set up.
 
 A starting point for the Frigate config. **Not tested, and the option names change between Frigate versions, so check it against your version's documentation:**
 
@@ -95,7 +99,7 @@ cameras:
       fps: 5
 ```
 
-The audio is A-law (G.711); recording it may need an audio output option or re-encoding to AAC. Motion detection is done by Frigate from the video, so the camera does not need to send motion events. If you get Frigate working with this, please open an issue or pull request with your working config.
+The audio is A-law (G.711); recording it may need an audio output option or re-encoding to AAC. Motion detection is done by Frigate from the video, so the camera does not need to send motion events. If you get Frigate working with this, a pull request or issue with your working config would help others, with no obligation.
 
 ## Licence
 
