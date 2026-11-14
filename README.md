@@ -65,4 +65,4 @@ Each camera would be one RTSP input, for example `rtsp://<decoder-host>:8554/liv
 
 ## Licence
 
-Not chosen yet.
+MIT, see `LICENSE`. This covers the notes and the example script only. The third-party decoder is not part of this repo and keeps its own terms.
