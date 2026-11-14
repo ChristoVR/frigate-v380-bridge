@@ -1,6 +1,10 @@
-# V380 cameras into Frigate (AWT3610E, AliOS Things firmware)
+# V380 / V380 Pro Wi-Fi camera: local RTSP stream for Frigate (AWT3610E, AliOS Things)
 
-Notes and launcher scripts for getting a local video and audio stream out of cheap V380 / V380 Pro Wi-Fi cameras that have **no RTSP, no ONVIF and no shell**, so that [Frigate](https://frigate.video) (or any RTSP client) can use them.
+Notes and launcher scripts for getting a local **RTSP video and audio stream** out of cheap V380 / V380 Pro Wi-Fi IP cameras that have **no RTSP, no ONVIF and no shell**, so that [Frigate](https://frigate.video), Home Assistant, VLC, ffmpeg or any RTSP client can use them without the cloud app.
+
+**Search terms:** V380, V380 Pro, V380 RTSP, V380 Frigate, AWT3610E, `Hw_AWT3610E_XHR_E_V1.0_WF`, AliOS Things camera, cheap Chinese Wi-Fi camera, white-label OEM IP camera, no ONVIF, no RTSP, port 8800, port 9800, local stream without cloud, PTZ dome Wi-Fi camera.
+
+**Which cameras?** Tested only on two `AWT3610E` units. Many unrelated shop brands sell cameras that use the V380 Pro app (for example Kerui, Hikwifi, Verto and LS Vision were named by other owners), but **other brands and models were not tested here** and may use different firmware, ports or login rules.
 
 **Status: draft, written from one person's tests on two cameras. Nothing here is guaranteed to work on yours.** Every claim says whether it was tested.
 
