@@ -1,0 +1,18 @@
+# Private working notes: never published
+SANITISING.md
+LICENSE-TODO.md
+
+# Never commit real launchers, captures or secrets
+Run-*.ps1
+!Run-Camera.example.ps1
+*.mp4
+*.mkv
+*.jpg
+*.jpeg
+*.png
+*.log
+*.pcap
+*.pcapng
+.env
+*.pem
+*.key
